@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrinquedoStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <div class="container-fluid px-0">
+        
+        <!-- Header -->
+        <div class="top-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="logo-box">
+                            <i class="fas fa-shapes fa-lg"></i>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h1 class="store-title">BrinquedoStore</h1>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 rounded-start-pill ps-3" placeholder="Buscar brinquedos...">
+                            <span class="input-group-text bg-white border-start-0 rounded-end-pill pe-3 text-primary">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid px-4 pb-5">
+            <div class="row g-4">
+                <!-- Sidebar (Left) -->
+                <div class="col-md-3 col-lg-2">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                            <i class="fas fa-bars me-2"></i> Menu
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li><a href="/" class="active"><i class="fas fa-home me-2"></i> Home</a></li>
+                            <li><a href="/catalogo"><i class="fas fa-box-open me-2"></i> Catálogo</a></li>
+                            <li><a href="/administracao"><i class="fas fa-cog me-2"></i> Administração</a></li>
+                            <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main Content (Right) -->
+                <div class="col-md-9 col-lg-10">
+                    <div class="main-content">
+                        <h2 class="section-title">Brinquedos em Destaque</h2>
+                        
+                        <!-- Product Grid -->
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                            <div class="col" th:each="brinquedo : ${brinquedos}">
+                                <div class="product-card">
+                                    <div class="product-image-box">
+                                        <a th:href="@{/detalhes/{id}(id=${brinquedo.id})}">
+                                            <img th:src="${brinquedo.imagemUrl}" class="product-img" th:alt="${brinquedo.nome}">
+                                        </a>
+                                        <div class="product-pill" th:text="${brinquedo.categoria?.nome}">Categoria</div>
+                                    </div>
+                                    <div class="product-info">
+                                        <a th:href="@{/detalhes/{id}(id=${brinquedo.id})}" class="text-decoration-none">
+                                            <div class="product-desc" th:text="${brinquedo.nome}">Nome do Brinquedo</div>
+                                        </a>
+                                        <div class="product-price" th:text="'R$ ' + ${#numbers.formatDecimal(brinquedo.valor, 0, 'COMMA', 2, 'POINT')}">R$ 99,90</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="simple-footer bg-white">
+            <div class="container">
+                <p class="mb-0">&copy; 2024 BrinquedoStore. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

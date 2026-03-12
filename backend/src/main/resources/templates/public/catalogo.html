@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - BrinquedoStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <div class="container-fluid px-0">
+        
+        <!-- Header -->
+        <div class="top-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="logo-box">
+                            <i class="fas fa-shapes fa-lg"></i>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h1 class="store-title">BrinquedoStore</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid px-4 pb-5">
+            <div class="row g-4">
+                <!-- Sidebar (Left) -->
+                <div class="col-md-3 col-lg-2">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                            <i class="fas fa-bars me-2"></i> Menu
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li><a href="/"><i class="fas fa-home me-2"></i> Home</a></li>
+                            <li><a href="/catalogo" class="active"><i class="fas fa-box-open me-2"></i> Catálogo</a></li>
+                            <li><a href="/administracao"><i class="fas fa-cog me-2"></i> Administração</a></li>
+                            <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main Content (Right) -->
+                <div class="col-md-9 col-lg-10">
+                    <div class="main-content">
+                        <h2 class="section-title">Nossas Categorias</h2>
+                        
+                        <!-- Category Grid -->
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                            <div class="col" th:each="categoriaItem : ${categorias}">
+                                <div class="product-card text-center">
+                                    <div class="product-image-box">
+                                        <a th:href="@{/catalogo/{categoria}(categoria=${categoriaItem.nome})}">
+                                            <img th:src="${categoriaItem.imgUrl}" class="product-img" th:alt="${categoriaItem.nome}">
+                                        </a>
+                                        <div class="product-pill">Ver Produtos</div>
+                                    </div>
+                                    <div class="product-info justify-content-center">
+                                        <a th:href="@{/catalogo/{categoria}(categoria=${categoriaItem.nome})}" class="text-decoration-none">
+                                            <div class="product-desc fs-4 text-primary" th:text="${categoriaItem.nome}">Nome da Categoria</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="simple-footer bg-white">
+            <div class="container">
+                <p class="mb-0">&copy; 2024 BrinquedoStore. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
