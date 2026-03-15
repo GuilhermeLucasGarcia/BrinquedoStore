@@ -80,13 +80,14 @@
                                         <a th:href="@{/detalhes/{id}(id=${brinquedo.id})}">
                                             <img th:src="${brinquedo.imagemUrl}" class="product-img" th:alt="${brinquedo.nome}">
                                         </a>
-                                        <div class="product-pill" th:text="${brinquedo.categoria?.nome}">Categoria</div>
+                                        <div class="product-pill" th:text="${brinquedo.categoria != null ? brinquedo.categoria.nome : 'Sem Categoria'}">Categoria</div>
                                     </div>
                                     <div class="product-info">
                                         <a th:href="@{/detalhes/{id}(id=${brinquedo.id})}" class="text-decoration-none">
                                             <div class="product-desc" th:text="${brinquedo.nome}">Nome do Brinquedo</div>
                                         </a>
-                                        <div class="product-price" th:text="'R$ ' + ${#numbers.formatDecimal(brinquedo.valor, 0, 'COMMA', 2, 'POINT')}">R$ 99,90</div>
+                                        <div class="product-price" th:if="${brinquedo.valor != null}" th:text="'R$ ' + ${#numbers.formatDecimal(brinquedo.valor, 0, 'COMMA', 2, 'POINT')}">R$ 99,90</div>
+                                        <div class="product-price" th:unless="${brinquedo.valor != null}">R$ --,--</div>
                                     </div>
                                 </div>
                             </div>
