@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - BrinquedoStore</title>
+    <title>Nova Marca - BrinquedoStore</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -56,8 +56,8 @@
                                     <i class="fas fa-cog me-2"></i> Administração
                                 </a>
                                 <ul class="collapse show submenu" id="adminSubmenu">
-                                    <li><a href="/administracao" class="active"><i class="fas fa-box me-2"></i> Produtos</a></li>
-                                    <li><a href="/administracao/marcas"><i class="fas fa-tags me-2"></i> Marcas</a></li>
+                                    <li><a href="/administracao">Produtos</a></li>
+                                    <li><a href="/administracao/marcas" class="active">Marcas</a></li>
                                 </ul>
                             </li>
                             <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
@@ -69,45 +69,31 @@
                 <div class="col-md-9 col-lg-10">
                     <div class="main-content">
                         <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-                            <h2 class="section-title mb-0 border-0 p-0">Gestão de Produtos</h2>
-                            <a href="/administracao/novo" class="btn btn-primary shadow-sm">
-                                <i class="fas fa-plus me-2"></i>Novo Brinquedo
+                            <h2 class="section-title mb-0 border-0 p-0" th:text="${marca.id == null ? 'Nova Marca' : 'Editar Marca'}">Marca</h2>
+                            <a href="/administracao/marcas" class="btn btn-outline-secondary btn-sm shadow-sm">
+                                <i class="fas fa-arrow-left me-2"></i>Voltar
                             </a>
                         </div>
                         
-                        <div class="table-responsive rounded-3 border">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th scope="col" class="py-3 ps-4">Brinquedo</th>
-                                        <th scope="col" class="py-3">Categoria</th>
-                                        <th scope="col" class="py-3">Valor</th>
-                                        <th scope="col" class="py-3 text-center">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="brinquedo : ${brinquedos}">
-                                        <td class="ps-4">
-                                            <div class="d-flex align-items-center">
-                                                <div class="rounded bg-light p-1 me-3" style="width: 40px; height: 40px;">
-                                                    <img th:src="${brinquedo.imagemUrl}" class="w-100 h-100" style="object-fit: contain;">
-                                                </div>
-                                                <span class="fw-bold text-dark" th:text="${brinquedo.nome}">Nome</span>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3" th:text="${brinquedo.categoria.nome}">Categoria</span></td>
-                                        <td class="fw-bold text-primary" th:text="'R$ ' + ${#numbers.formatDecimal(brinquedo.valor, 0, 'COMMA', 2, 'POINT')}">R$ 50,00</td>
-                                        <td class="text-center">
-                                            <a th:href="@{/administracao/editar/{id}(id=${brinquedo.id})}" class="btn btn-sm btn-outline-primary me-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a th:href="@{/administracao/excluir/{id}(id=${brinquedo.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir?')">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-body p-4">
+                                <form th:action="@{/administracao/marcas/salvar}" th:object="${marca}" method="post">
+                                    <input type="hidden" th:field="*{id}">
+                                    
+                                    <div class="mb-4">
+                                        <label for="nome" class="form-label fw-bold text-secondary">Nome da Marca</label>
+                                        <input type="text" class="form-control form-control-lg border-2" id="nome" th:field="*{nome}" placeholder="Ex: Estrela, Mattel, LEGO..." required autofocus>
+                                        <div class="form-text">Informe o nome completo da marca fabricante.</div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                                        <a href="/administracao/marcas" class="btn btn-light btn-lg px-5">Cancelar</a>
+                                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                                            <i class="fas fa-save me-2"></i>Salvar Marca
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,7 +105,6 @@
                 <p class="mb-0">&copy; 2024 Be Happy. Todos os direitos reservados.</p>
             </div>
         </footer>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

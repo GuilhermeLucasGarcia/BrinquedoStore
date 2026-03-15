@@ -1,6 +1,7 @@
 package com.brinquedostore.api.controller;
 
 import com.brinquedostore.api.model.Brinquedo;
+import com.brinquedostore.api.model.Marca;
 import com.brinquedostore.api.service.BrinquedoService;
 import com.brinquedostore.api.service.CategoriaService;
 import com.brinquedostore.api.service.MarcaService;
@@ -59,6 +60,32 @@ public class AdminController {
     public String excluir(@PathVariable Long id) {
         brinquedoService.deletar(id);
         return "redirect:/administracao";
+    }
+
+    // --- Rotas de Marcas ---
+
+    @GetMapping("/marcas")
+    public String listarMarcas(Model model) {
+        model.addAttribute("marcas", marcaService.listarTodas());
+        return "admin/marcas";
+    }
+
+    @GetMapping("/marcas/novo")
+    public String novaMarca(Model model) {
+        model.addAttribute("marca", new Marca());
+        return "admin/formulario-marca";
+    }
+
+    @PostMapping("/marcas/salvar")
+    public String salvarMarca(@ModelAttribute Marca marca) {
+        marcaService.salvar(marca);
+        return "redirect:/administracao/marcas";
+    }
+
+    @GetMapping("/marcas/excluir/{id}")
+    public String excluirMarca(@PathVariable Long id) {
+        marcaService.deletar(id);
+        return "redirect:/administracao/marcas";
     }
 
     private void carregarDependencias(Model model) {

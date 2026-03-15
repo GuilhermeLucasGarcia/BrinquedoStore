@@ -1,12 +1,10 @@
 package com.brinquedostore.api.model;
 
-import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
 @Table(name = "\"MARCA\"")
 public class Marca {
@@ -20,4 +18,28 @@ public class Marca {
     @UpdateTimestamp
     @Column(name = "\"DT_ALTERACAO\"")
     private LocalDateTime dtAlteracao;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public LocalDateTime getDtAlteracao() {
+        return dtAlteracao;
+    }
+
+    public void setDtAlteracao(LocalDateTime dtAlteracao) {
+        this.dtAlteracao = dtAlteracao;
+    }
 }

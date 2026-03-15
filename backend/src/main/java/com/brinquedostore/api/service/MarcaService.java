@@ -17,4 +17,12 @@ public class MarcaService {
     public List<Marca> listarTodas() {
         return marcaRepository.findAll();
     }
+
+    public Marca salvar(Marca marca) {
+        return marcaRepository.save(marca);
+    }
+
+    public void deletar(Long id) {
+        marcaRepository.deleteById(id);
+    }
 }
