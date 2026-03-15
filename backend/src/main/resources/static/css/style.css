@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Chewy&display=swap');
 
 :root {
-    --primary-color: #7C3AED; /* Roxo vibrante */
+    --primary-color: #00008B; /* Azul Escuro (Baseado no Cachorro de Balão da logo) */
     --secondary-color: #F59E0B; /* Laranja/Amarelo */
-    --accent-color: #EC4899; /* Rosa */
-    --background-color: #F3F4F6;
-    --text-color: #1F2937;
+    --accent-color: #00008B; /* Azul mais escuro (Cachorro de Balão) */
+    --background-color: #F8FAFC;
+    --text-color: #1E293B;
     --card-bg: #FFFFFF;
     --border-radius: 12px;
-    --primary-light: #DDD6FE; /* Roxo claro */
-    --primary-dark: #5B21B6; /* Roxo escuro */
+    --primary-light: #DBEAFE; /* Azul claro (Baseado no fundo da logo) */
+    --primary-dark: #000066; /* Azul marinho profundo */
+    --logo-font: 'Chewy', system-ui; /* Nova fonte para a logo */
 }
 
 body {
@@ -21,63 +22,174 @@ body {
 
 /* Header Styles */
 .top-header {
-    background-color: white;
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    background-color: #B2B9EE; /* Azul lavanda baseado no fundo da imagem */
+    padding: 0.5rem 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
-}
-
-.logo-box {
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-light);
-    color: var(--primary-color);
-    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.9rem;
-    position: relative;
-    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
+    justify-content: space-between;
 }
 
-.store-title {
-    font-size: 2rem;
-    font-weight: 800;
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.header-center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo-container {
+    height: 80px; /* Aumentado de 60px para 80px */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre as duas logos */
+}
+
+.logo-be-happy {
+    height: 100%;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* Estilo do Texto "Be Happy" com a fonte Bubble */
+.logo-text-be-happy {
+    font-family: var(--logo-font);
+    font-size: 2.2rem; /* Reduzido de 2.8rem para 2.2rem */
     color: var(--primary-color);
-    text-align: left;
-    margin-left: 1rem;
-    letter-spacing: -0.5px;
+    margin: 0;
+    line-height: 1;
+    white-space: nowrap;
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5), 
+                 3px 3px 6px rgba(0, 0, 0, 0.1); /* Efeito 3D sutil */
+    transition: transform 0.3s ease;
+    user-select: none;
+}
+
+.logo-container:hover .logo-text-be-happy {
+    transform: scale(1.05);
+}
+
+.logo-be-happy:hover {
+    transform: scale(1.08);
+}
+
+.search-bar-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border: 2px solid transparent !important;
+    padding-left: 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.search-input:focus {
+    background-color: white !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15) !important;
+}
+
+.header-right .btn-light {
+    background-color: white !important; /* Fundo branco conforme solicitado */
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.header-right .btn-light:hover {
+    background-color: #f8fafc !important;
+    transform: scale(1.1);
+}
+
+/* Global Button Styles */
+.btn {
+    border-radius: 20px !important; /* Bordas arredondadas conforme imagem */
+    font-weight: 800 !important;
+    padding: 12px 28px !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    background-color: #B2B9EE !important; /* Azul Lavanda do cabeçalho */
+    color: #00008B !important; /* Texto no azul escuro do cachorro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important; /* Sombra suave conforme imagem */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    background-color: #a1a9e6 !important; /* Tom levemente mais escuro no hover */
+    color: #00008B !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Ajuste específico para o botão de salvar/primário se quiser manter um destaque, 
+   mas seguindo a regra de cor que você pediu */
+.btn-primary {
+    background-color: #B2B9EE !important;
+    color: #00008B !important;
+}
+
+/* Ajuste para botões de quantidade e controles simples */
+.input-group .btn-outline-secondary, 
+.input-group .btn-outline-primary {
+    background-color: white !important; /* Fundo branco conforme solicitado */
+    color: #00008B !important; /* Ícone no azul escuro */
+    border: 1px solid #e2e8f0 !important;
+    padding: 5px 15px !important;
+    border-radius: 15px !important;
+}
+
+.input-group .btn-outline-secondary:hover {
+    background-color: #f8fafc !important;
 }
 
 /* Sidebar Styles */
 .sidebar-container {
     background-color: white;
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    height: 100%;
+    border-radius: 20px;
+    padding: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .sidebar-header {
-    background-color: var(--primary-color);
+    background-color: #00008B; /* Azul Escuro */
     color: white;
-    padding: 12px 20px;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
+    padding: 15px;
+    border-radius: 15px;
     text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
     letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .sidebar-menu {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 .sidebar-menu li {
@@ -85,26 +197,91 @@ body {
 }
 
 .sidebar-menu a {
-    display: block;
-    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    color: #1E293B;
     text-decoration: none;
-    color: var(--text-color);
     font-weight: 700;
-    transition: all 0.2s ease;
-    border-radius: var(--border-radius);
-    background-color: transparent;
+    border-radius: 15px;
+    transition: all 0.2s;
 }
 
-.sidebar-menu a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary-color);
-    transform: translateX(5px);
+.sidebar-menu a i {
+    width: 30px;
+    font-size: 1.2rem;
+}
+
+.sidebar-menu a:hover:not(.active) {
+    background-color: #f8fafc;
 }
 
 .sidebar-menu a.active {
-    background-color: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
+    background-color: #00008B !important; /* Azul Escuro conforme imagem */
+    color: white !important;
+}
+
+/* Submenu Styles */
+.submenu {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+
+.submenu a {
+    padding: 10px 20px 10px 48px; /* Recuo para alinhar com o texto acima */
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    margin-bottom: 4px;
+}
+
+.submenu a.active {
+    background-color: #DBEAFE !important; /* Azul claro para o sub-item ativo */
+    color: #00008B !important;
+}
+
+.sidebar-menu [data-bs-toggle="collapse"]::after {
+    display: none; /* Removendo a seta padrão do Bootstrap */
+}
+
+/* Nova seta minimalista conforme imagem */
+.sidebar-menu a[data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+.sidebar-menu a[data-bs-toggle="collapse"]::after {
+    display: block !important;
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.7rem;
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-menu a[data-bs-toggle="collapse"]:not(.collapsed)::after {
+    transform: rotate(180deg);
+}
+
+.sidebar-menu [data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+.sidebar-menu [data-bs-toggle="collapse"]::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.7rem;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-menu [data-bs-toggle="collapse"]:not(.collapsed)::after {
+    transform: translateY(-50%) rotate(180deg);
 }
 
 /* Main Content Styles */
@@ -218,9 +395,10 @@ body {
 
 /* Footer */
 .simple-footer {
-    border-top: 1px solid #e5e7eb;
-    margin-top: 3rem;
+    background-color: white;
     padding: 2rem 0;
+    margin-top: 3rem;
+}
     text-align: center;
     color: #6b7280;
     font-size: 0.9rem;

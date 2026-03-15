@@ -10,63 +10,35 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-shapes me-2"></i>BrinquedoStore
+    <!-- Header -->
+    <div class="top-header">
+        <div class="header-left">
+            <a href="/" class="logo-container text-decoration-none">
+                <img th:src="@{/img/logo.png}" class="logo-be-happy" alt="Logo">
+                <span class="logo-text-be-happy">Be Happy</span>
             </a>
-            
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Search Bar (Desktop) -->
-            <div class="d-none d-lg-block mx-auto" style="width: 40%;">
+        </div>
+        
+        <div class="header-center">
+            <div class="search-bar-container">
                 <div class="input-group">
-                    <span class="input-group-text bg-light border-0 rounded-start-pill ps-3">
-                        <i class="fas fa-search text-muted"></i>
+                    <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="O que você está procurando?">
+                    <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
+                        <i class="fas fa-search"></i>
                     </span>
-                    <input type="text" class="form-control bg-light border-0 rounded-end-pill py-2" placeholder="O que você está procurando?">
                 </div>
             </div>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Categorias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/administracao">Administração</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sobre">Sobre a equipe</a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-icon-btn" href="#">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="nav-icon-btn position-relative" href="#">
-                            <i class="fas fa-shopping-bag"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.6rem;">
-                                2
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="nav-icon-btn" href="#">
-                            <i class="fas fa-user"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
-    </nav>
+
+        <div class="header-right">
+            <a href="/sacola" class="btn btn-light rounded-circle shadow-sm position-relative text-primary" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-shopping-bag"></i>
+                <span th:if="${quantidadeTotal > 0}" th:text="${quantidadeTotal}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.6rem;">
+                    0
+                </span>
+            </a>
+        </div>
+    </div>
 
     <!-- Breadcrumb -->
     <div class="container mt-4">
@@ -129,16 +101,27 @@
                 <p class="lead text-muted mb-5" th:text="${brinquedo.descricao}">Descrição...</p>
 
                 <!-- Actions -->
-                <div class="d-flex gap-3 mb-5">
+                <form th:action="@{/sacola/adicionar}" method="post" class="d-flex gap-3 mb-5">
+                    <input type="hidden" name="id" th:value="${brinquedo.id}">
                     <div class="input-group" style="width: 140px;">
-                        <button class="btn btn-outline-secondary border-end-0" type="button"><i class="fas fa-minus"></i></button>
-                        <input type="text" class="form-control text-center border-start-0 border-end-0" value="1" style="max-width: 50px;">
-                        <button class="btn btn-outline-secondary border-start-0" type="button"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-outline-secondary border-end-0" type="button" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
+                        <input type="number" name="quantidade" id="quantidadeInput" class="form-control text-center border-start-0 border-end-0" value="1" min="1" style="max-width: 50px;">
+                        <button class="btn btn-outline-secondary border-start-0" type="button" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
                     </div>
-                    <button class="btn btn-primary btn-lg-custom flex-grow-1 shadow-sm">
+                    <button type="submit" class="btn btn-primary btn-lg-custom flex-grow-1 shadow-sm">
                         <i class="fas fa-shopping-bag me-2"></i> Adicionar à Sacola
                     </button>
-                </div>
+                </form>
+
+                <script>
+                    function changeQty(val) {
+                        let input = document.getElementById('quantidadeInput');
+                        let newVal = parseInt(input.value) + val;
+                        if (newVal >= 1) {
+                            input.value = newVal;
+                        }
+                    }
+                </script>
 
                 <!-- Features -->
                 <div class="row g-4 border-top pt-4">
@@ -190,51 +173,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <a class="navbar-brand mb-3 d-block" href="#">
-                        <i class="fas fa-shapes me-2"></i>BrinquedoStore
-                    </a>
-                    <p class="text-muted">Levando alegria e diversão para crianças de todas as idades com os melhores brinquedos do mercado.</p>
-                    <div class="d-flex gap-3 mt-3">
-                        <a href="#" class="btn btn-light rounded-circle text-primary"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="btn btn-light rounded-circle text-primary"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="btn btn-light rounded-circle text-primary"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-2">
-                    <h6 class="fw-bold mb-3">Loja</h6>
-                    <ul class="list-unstyled text-muted small">
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Novidades</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Mais Vendidos</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Categorias</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Ofertas</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-lg-2">
-                    <h6 class="fw-bold mb-3">Ajuda</h6>
-                    <ul class="list-unstyled text-muted small">
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Entrega</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Trocas</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">Contato</a></li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-reset">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h6 class="fw-bold mb-3">Newsletter</h6>
-                    <p class="text-muted small">Receba ofertas exclusivas e novidades.</p>
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control border-0 bg-light" placeholder="Seu e-mail" style="padding: 0.75rem 1rem; border-radius: 50px 0 0 50px;">
-                        <button class="btn btn-primary" type="button" style="border-radius: 0 50px 50px 0; padding-left: 1.5rem; padding-right: 1.5rem;">Assinar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="border-top mt-5 pt-4 text-center text-muted small">
-                <p>&copy; 2024 BrinquedoStore. Design inspirado no Figma.</p>
-            </div>
+    <footer class="simple-footer bg-white border-top">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Be Happy. Todos os direitos reservados.</p>
         </div>
     </footer>
 

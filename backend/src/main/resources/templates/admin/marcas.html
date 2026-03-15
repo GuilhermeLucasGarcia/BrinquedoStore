@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - BrinquedoStore</title>
+    <title>Gestão de Marcas - BrinquedoStore</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -24,7 +24,7 @@
             <div class="header-center">
                 <div class="search-bar-container">
                     <div class="input-group">
-                        <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="Buscar no painel administrativo...">
+                        <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="Buscar marcas...">
                         <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
                             <i class="fas fa-search"></i>
                         </span>
@@ -56,8 +56,8 @@
                                     <i class="fas fa-cog me-2"></i> Administração
                                 </a>
                                 <ul class="collapse show submenu" id="adminSubmenu">
-                                    <li><a href="/administracao" class="active"><i class="fas fa-box me-2"></i> Produtos</a></li>
-                                    <li><a href="/administracao/marcas"><i class="fas fa-tags me-2"></i> Marcas</a></li>
+                                    <li><a href="/administracao"><i class="fas fa-box me-2"></i> Produtos</a></li>
+                                    <li><a href="/administracao/marcas" class="active"><i class="fas fa-tags me-2"></i> Marcas</a></li>
                                 </ul>
                             </li>
                             <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
@@ -69,9 +69,9 @@
                 <div class="col-md-9 col-lg-10">
                     <div class="main-content">
                         <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-                            <h2 class="section-title mb-0 border-0 p-0">Gestão de Produtos</h2>
-                            <a href="/administracao/novo" class="btn btn-primary shadow-sm">
-                                <i class="fas fa-plus me-2"></i>Novo Brinquedo
+                            <h2 class="section-title mb-0 border-0 p-0">Gestão de Marcas</h2>
+                            <a href="/administracao/marcas/novo" class="btn btn-primary shadow-sm">
+                                <i class="fas fa-plus me-2"></i>Nova Marca
                             </a>
                         </div>
                         
@@ -79,32 +79,23 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" class="py-3 ps-4">Brinquedo</th>
-                                        <th scope="col" class="py-3">Categoria</th>
-                                        <th scope="col" class="py-3">Valor</th>
+                                        <th scope="col" class="py-3 ps-4">ID</th>
+                                        <th scope="col" class="py-3">Nome da Marca</th>
                                         <th scope="col" class="py-3 text-center">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="brinquedo : ${brinquedos}">
-                                        <td class="ps-4">
-                                            <div class="d-flex align-items-center">
-                                                <div class="rounded bg-light p-1 me-3" style="width: 40px; height: 40px;">
-                                                    <img th:src="${brinquedo.imagemUrl}" class="w-100 h-100" style="object-fit: contain;">
-                                                </div>
-                                                <span class="fw-bold text-dark" th:text="${brinquedo.nome}">Nome</span>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3" th:text="${brinquedo.categoria.nome}">Categoria</span></td>
-                                        <td class="fw-bold text-primary" th:text="'R$ ' + ${#numbers.formatDecimal(brinquedo.valor, 0, 'COMMA', 2, 'POINT')}">R$ 50,00</td>
+                                    <tr th:each="marca : ${marcas}">
+                                        <td class="ps-4" th:text="${marca.id}">1</td>
+                                        <td class="fw-bold text-dark" th:text="${marca.nome}">Nome da Marca</td>
                                         <td class="text-center">
-                                            <a th:href="@{/administracao/editar/{id}(id=${brinquedo.id})}" class="btn btn-sm btn-outline-primary me-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a th:href="@{/administracao/excluir/{id}(id=${brinquedo.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir?')">
+                                            <a th:href="@{/administracao/marcas/excluir/{id}(id=${marca.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir esta marca?')">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(marcas)}">
+                                        <td colspan="3" class="text-center py-4 text-muted">Nenhuma marca cadastrada.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,7 +110,6 @@
                 <p class="mb-0">&copy; 2024 Be Happy. Todos os direitos reservados.</p>
             </div>
         </footer>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

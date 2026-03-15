@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Sacola - BrinquedoStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-light">
+
+    <!-- Header -->
+    <div class="top-header">
+        <div class="header-left">
+            <a href="/" class="logo-container text-decoration-none">
+                <img th:src="@{/img/logo.png}" class="logo-be-happy" alt="Logo">
+                <span class="logo-text-be-happy">Be Happy</span>
+            </a>
+        </div>
+        
+        <div class="header-center">
+            <div class="search-bar-container">
+                <div class="input-group">
+                    <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="O que você está procurando?">
+                    <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <a href="/sacola" class="btn btn-light rounded-circle shadow-sm position-relative text-primary" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-shopping-bag"></i>
+                <span th:if="${quantidadeTotal > 0}" th:text="${quantidadeTotal}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.6rem;">
+                    0
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <h2 class="mb-4 fw-bold"><i class="fas fa-shopping-bag me-2 text-primary"></i>Minha Sacola</h2>
+        
+        <div class="row g-4">
+            <!-- Itens da Sacola -->
+            <div class="col-lg-8">
+                <div th:if="${#lists.isEmpty(itens)}" class="card border-0 shadow-sm rounded-4 p-5 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-shopping-basket fa-4x text-muted opacity-25"></i>
+                    </div>
+                    <h4>Sua sacola está vazia</h4>
+                    <p class="text-muted">Que tal dar uma olhada no nosso catálogo e escolher algo legal?</p>
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-primary btn-lg rounded-pill px-5">Ver Catálogo</a>
+                    </div>
+                </div>
+
+                <div th:unless="${#lists.isEmpty(itens)}" class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 py-3">Produto</th>
+                                    <th class="py-3 text-center">Quantidade</th>
+                                    <th class="py-3 text-end">Preço</th>
+                                    <th class="py-3 text-end pe-4">Subtotal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${itens}">
+                                    <td class="ps-4 py-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded bg-light p-2 me-3" style="width: 80px; height: 80px;">
+                                                <img th:src="${item.imagemUrl}" class="w-100 h-100" style="object-fit: contain;">
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 fw-bold" th:text="${item.nome}">Nome do Produto</h6>
+                                                <small class="text-muted" th:text="'R$ ' + ${#numbers.formatDecimal(item.valor, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/sacola/atualizar}" method="post" class="d-flex justify-content-center align-items-center">
+                                            <input type="hidden" name="id" th:value="${item.id}">
+                                            <div class="input-group input-group-sm" style="width: 100px;">
+                                                <input type="number" name="quantidade" th:value="${item.quantidade}" min="1" class="form-control text-center border-2 rounded-start-pill" onchange="this.form.submit()">
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="text-end fw-bold" th:text="'R$ ' + ${#numbers.formatDecimal(item.valor, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                                    <td class="text-end fw-bold text-primary" th:text="'R$ ' + ${#numbers.formatDecimal(item.subtotal, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                                    <td class="pe-4 text-end">
+                                        <a th:href="@{/sacola/remover/{id}(id=${item.id})}" class="btn btn-link text-danger p-0">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo do Pedido -->
+            <div class="col-lg-4" th:unless="${#lists.isEmpty(itens)}">
+                <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
+                    <h5 class="fw-bold mb-4">Resumo do Pedido</h5>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-bold" th:text="'R$ ' + ${#numbers.formatDecimal(total, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Frete</span>
+                        <span class="text-success fw-bold">Grátis</span>
+                    </div>
+                    <hr class="my-4">
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5 fw-bold">Total</span>
+                        <span class="h5 fw-bold text-primary" th:text="'R$ ' + ${#numbers.formatDecimal(total, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg rounded-pill shadow-sm py-3">Finalizar Compra</button>
+                        <a href="/" class="btn btn-light btn-lg rounded-pill py-3">Continuar Comprando</a>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <div class="d-flex justify-content-center gap-3 text-muted">
+                            <i class="fab fa-cc-visa fa-2x"></i>
+                            <i class="fab fa-cc-mastercard fa-2x"></i>
+                            <i class="fas fa-barcode fa-2x"></i>
+                            <i class="fas fa-money-bill-wave fa-2x"></i>
+                        </div>
+                        <small class="text-muted d-block mt-3"><i class="fas fa-lock me-1"></i>Pagamento 100% Seguro</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="simple-footer bg-white border-top">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Be Happy. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
