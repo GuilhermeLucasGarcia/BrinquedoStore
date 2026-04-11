@@ -28,9 +28,10 @@ public class AdminController {
     }
 
     @GetMapping
-    public String listar(Model model) {
-        List<Brinquedo> brinquedos = brinquedoService.listarTodos();
+    public String listar(@RequestParam(defaultValue = "") String nome, Model model) {
+        List<Brinquedo> brinquedos = brinquedoService.buscarPorNome(nome);
         model.addAttribute("brinquedos", brinquedos);
+        model.addAttribute("nomeFiltro", nome);
         return "admin/administracao";
     }
 
@@ -65,8 +66,9 @@ public class AdminController {
     // --- Rotas de Marcas ---
 
     @GetMapping("/marcas")
-    public String listarMarcas(Model model) {
-        model.addAttribute("marcas", marcaService.listarTodas());
+    public String listarMarcas(@RequestParam(defaultValue = "") String nome, Model model) {
+        model.addAttribute("marcas", marcaService.buscarPorNome(nome));
+        model.addAttribute("nomeFiltro", nome);
         return "admin/marcas";
     }
 

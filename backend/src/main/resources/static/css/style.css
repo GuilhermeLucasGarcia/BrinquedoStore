@@ -95,11 +95,106 @@ body {
     max-width: 500px;
 }
 
+.live-search-wrapper {
+    position: relative;
+}
+
 .search-input {
     background-color: rgba(255, 255, 255, 0.9) !important;
     border: 2px solid transparent !important;
     padding-left: 1.5rem !important;
     transition: all 0.3s ease !important;
+}
+
+.search-input.is-searching {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.92), rgba(219,234,254,0.92));
+}
+
+.live-search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e2e8f0;
+    z-index: 40;
+    overflow: hidden;
+}
+
+.live-search-state {
+    padding: 14px 18px;
+    color: #475569;
+    font-weight: 700;
+}
+
+.live-search-state-loading::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 2px solid #cbd5e1;
+    border-top-color: var(--primary-color);
+    vertical-align: middle;
+    animation: liveSearchSpin 0.8s linear infinite;
+}
+
+.live-search-state-error {
+    color: #b91c1c;
+}
+
+.live-search-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 18px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f1f5f9;
+    align-items: flex-start;
+}
+
+.live-search-item:last-child {
+    border-bottom: 0;
+}
+
+.live-search-item:hover {
+    background: #f8fafc;
+}
+
+.live-search-item-type {
+    min-width: 84px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--primary-color);
+    background: #dbeafe;
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-align: center;
+}
+
+.live-search-item-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.live-search-item-body strong {
+    color: #0f172a;
+    font-size: 0.95rem;
+}
+
+.live-search-item-body small {
+    color: #64748b;
+}
+
+@keyframes liveSearchSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .search-input:focus {

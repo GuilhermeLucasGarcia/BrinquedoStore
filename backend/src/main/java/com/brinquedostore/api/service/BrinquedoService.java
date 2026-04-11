@@ -22,12 +22,26 @@ public class BrinquedoService {
         return brinquedoRepository.findAll();
     }
 
+    public List<Brinquedo> buscarPorNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return brinquedoRepository.findAll();
+        }
+        return brinquedoRepository.findByNomeContainingIgnoreCaseOrderByNomeAsc(nome.trim());
+    }
+
+    public List<Brinquedo> buscarSugestoesPorNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        return brinquedoRepository.findTop8ByNomeContainingIgnoreCaseOrderByNomeAsc(nome.trim());
+    }
+
     public Optional<Brinquedo> buscarPorId(Long id) {
         return brinquedoRepository.findById(id);
     }
 
     public List<Brinquedo> buscarPorCategoria(String categoria) {
-        return brinquedoRepository.findByCategoriaNome(categoria);
+        return brinquedoRepository.findByCategoriaNomeIgnoreCase(categoria);
     }
 
     public Brinquedo salvar(Brinquedo brinquedo) {
@@ -36,5 +50,9 @@ public class BrinquedoService {
 
     public void deletar(Long id) {
         brinquedoRepository.deleteById(id);
+    }
+
+    public boolean existeBrinquedoNaCategoria(Long categoriaId) {
+        return brinquedoRepository.existsByCategoriaId(categoriaId);
     }
 }

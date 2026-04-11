@@ -22,7 +22,9 @@
         <div class="header-center">
             <div class="search-bar-container">
                 <div class="input-group">
-                    <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="O que você está procurando?">
+                    <input type="text" class="form-control search-input rounded-pill ps-4"
+                           placeholder="O que você está procurando?"
+                           data-live-search-url="/api/search/public">
                     <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
                         <i class="fas fa-search"></i>
                     </span>
@@ -179,6 +181,7 @@
         </div>
     </footer>
 
+    <script th:src="@{/js/live-search.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

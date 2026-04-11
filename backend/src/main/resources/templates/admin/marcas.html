@@ -24,7 +24,9 @@
             <div class="header-center">
                 <div class="search-bar-container">
                     <div class="input-group">
-                        <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="Buscar marcas...">
+                        <input type="text" class="form-control search-input rounded-pill ps-4"
+                               placeholder="Buscar marcas..."
+                               data-live-search-url="/api/search/admin">
                         <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
                             <i class="fas fa-search"></i>
                         </span>
@@ -51,15 +53,7 @@
                         <ul class="sidebar-menu">
                             <li><a href="/"><i class="fas fa-home me-2"></i> Home</a></li>
                             <li><a href="/catalogo"><i class="fas fa-box-open me-2"></i> Catálogo</a></li>
-                            <li>
-                                <a href="#adminSubmenu" data-bs-toggle="collapse" class="active" aria-expanded="true">
-                                    <i class="fas fa-cog me-2"></i> Administração
-                                </a>
-                                <ul class="collapse show submenu" id="adminSubmenu">
-                                    <li><a href="/administracao"><i class="fas fa-box me-2"></i> Produtos</a></li>
-                                    <li><a href="/administracao/marcas" class="active"><i class="fas fa-tags me-2"></i> Marcas</a></li>
-                                </ul>
-                            </li>
+                        <li th:replace="fragments/sidebar :: adminMenu('marcas', true)"></li>
                             <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
                         </ul>
                     </div>
@@ -73,6 +67,26 @@
                             <a href="/administracao/marcas/novo" class="btn btn-primary shadow-sm">
                                 <i class="fas fa-plus me-2"></i>Nova Marca
                             </a>
+                        </div>
+
+                        <div class="card shadow-sm border-0 rounded-4 mb-4">
+                            <div class="card-body p-4">
+                                <form method="get" th:action="@{/administracao/marcas}">
+                                    <div class="row g-3 align-items-end">
+                                        <div class="col-lg-8">
+                                            <label for="nome" class="form-label fw-bold">Buscar por nome</label>
+                                            <input type="text" class="form-control" id="nome" name="nome"
+                                                   th:value="${nomeFiltro}" placeholder="Ex.: Estrela, Hasbro ou Mattel">
+                                        </div>
+                                        <div class="col-lg-4 d-grid d-md-flex gap-2">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="fas fa-filter me-2"></i>Filtrar
+                                            </button>
+                                            <a href="/administracao/marcas" class="btn btn-outline-secondary w-100">Limpar</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         
                         <div class="table-responsive rounded-3 border">
@@ -112,6 +126,7 @@
         </footer>
     </div>
 
+    <script th:src="@{/js/live-search.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

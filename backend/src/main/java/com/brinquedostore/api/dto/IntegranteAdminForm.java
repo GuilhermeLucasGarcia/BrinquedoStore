@@ -1,31 +1,27 @@
-package com.brinquedostore.api.model;
+package com.brinquedostore.api.dto;
 
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "\"INTEGRANTE\"")
-public class Integrante {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class IntegranteAdminForm {
+
     private Long id;
 
-    @Column(name = "\"NOME\"", nullable = false)
+    @NotBlank(message = "Informe o nome do usuário.")
+    @Size(max = 255, message = "O nome deve ter no máximo 255 caracteres.")
     private String nome;
 
-    @Column(name = "\"IMG_URL\"")
+    @Size(max = 500, message = "A URL da imagem deve ter no máximo 500 caracteres.")
     private String imgUrl;
 
-    @Column(name = "\"NOME_USUARIO\"")
+    @NotBlank(message = "Informe o nome de usuário.")
+    @Size(max = 255, message = "O nome de usuário deve ter no máximo 255 caracteres.")
     private String nomeUsuario;
 
-    @Column(name = "\"SENHA\"")
+    @Size(max = 255, message = "A senha deve ter no máximo 255 caracteres.")
     private String senha;
 
-    @UpdateTimestamp
-    @Column(name = "\"DT_ALTERACAO\"")
     private LocalDateTime dtAlteracao;
 
     public Long getId() {

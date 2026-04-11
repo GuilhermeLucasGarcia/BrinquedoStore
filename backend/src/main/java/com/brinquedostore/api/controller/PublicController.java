@@ -1,6 +1,7 @@
 package com.brinquedostore.api.controller;
 
 import com.brinquedostore.api.model.Brinquedo;
+import com.brinquedostore.api.model.Categoria;
 import com.brinquedostore.api.service.BrinquedoService;
 import com.brinquedostore.api.service.CategoriaService;
 import com.brinquedostore.api.service.IntegranteService;
@@ -33,12 +34,15 @@ public class PublicController {
 
     @GetMapping("/catalogo")
     public String catalogo(Model model) {
-        model.addAttribute("categorias", categoriaService.listarTodas());
+        model.addAttribute("categorias", categoriaService.listarAtivas());
         return "public/catalogo";
     }
     
     @GetMapping("/catalogo/{categoria}")
     public String catalogoCategoria(@PathVariable String categoria, Model model) {
+        categoriaService.buscarPorNome(categoria)
+                .filter(Categoria::getAtivo)
+                .orElseThrow(() -> new IllegalArgumentException("Catálogo inválido: " + categoria));
         List<Brinquedo> brinquedos = brinquedoService.buscarPorCategoria(categoria);
         model.addAttribute("brinquedos", brinquedos);
         model.addAttribute("nomeCategoria", categoria);

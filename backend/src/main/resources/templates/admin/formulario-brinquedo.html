@@ -24,7 +24,9 @@
             <div class="header-center">
                 <div class="search-bar-container">
                     <div class="input-group">
-                        <input type="text" class="form-control search-input rounded-pill ps-4" placeholder="Buscar no painel administrativo...">
+                        <input type="text" class="form-control search-input rounded-pill ps-4"
+                               placeholder="Buscar no painel administrativo..."
+                               data-live-search-url="/api/search/admin">
                         <span class="position-absolute end-0 top-50 translate-middle-y pe-3 text-primary" style="z-index: 5;">
                             <i class="fas fa-search"></i>
                         </span>
@@ -51,15 +53,7 @@
                         <ul class="sidebar-menu">
                             <li><a href="/"><i class="fas fa-home me-2"></i> Home</a></li>
                             <li><a href="/catalogo"><i class="fas fa-box-open me-2"></i> Catálogo</a></li>
-                            <li>
-                                <a href="#adminSubmenu" data-bs-toggle="collapse" class="active" aria-expanded="true">
-                                    <i class="fas fa-cog me-2"></i> Administração
-                                </a>
-                                <ul class="collapse show submenu" id="adminSubmenu">
-                                    <li><a href="/administracao" class="active">Produtos</a></li>
-                                    <li><a href="/administracao/marcas">Marcas</a></li>
-                                </ul>
-                            </li>
+                            <li th:replace="fragments/sidebar :: adminMenu('produtos', true)"></li>
                             <li><a href="/sobre"><i class="fas fa-users me-2"></i> Equipe</a></li>
                         </ul>
                     </div>
@@ -77,6 +71,7 @@
                             <div class="card-body p-4">
                                 <form th:action="@{/administracao/salvar}" th:object="${brinquedo}" method="post">
                                     <input type="hidden" th:field="*{id}" />
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                     
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
@@ -154,6 +149,7 @@
         </footer>
     </div>
 
+    <script th:src="@{/js/live-search.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

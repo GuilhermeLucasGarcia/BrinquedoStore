@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<li th:fragment="adminMenu(activeAdminItem, expanded)">
+    <a href="#adminSubmenu"
+       data-bs-toggle="collapse"
+       th:class="${expanded} ? 'active' : 'collapsed'"
+       th:attr="aria-expanded=${expanded}">
+        <i class="fas fa-cog me-2"></i> Administração
+    </a>
+    <ul id="adminSubmenu"
+        class="collapse submenu"
+        th:classappend="${expanded} ? ' show' : ''">
+        <li><a href="/administracao"
+               th:classappend="${activeAdminItem == 'produtos'} ? ' active' : ''">
+            <i class="fas fa-box me-2"></i> Produtos
+        </a></li>
+        <li><a href="/administracao/catalogos"
+               th:classappend="${activeAdminItem == 'catalogos'} ? ' active' : ''">
+            <i class="fas fa-book-open me-2"></i> Catálogos
+        </a></li>
+        <li><a href="/administracao/marcas"
+               th:classappend="${activeAdminItem == 'marcas'} ? ' active' : ''">
+            <i class="fas fa-tags me-2"></i> Marcas
+        </a></li>
+        <li><a href="/administracao/usuarios"
+               th:classappend="${activeAdminItem == 'usuarios'} ? ' active' : ''">
+            <i class="fas fa-users me-2"></i> Usuários
+        </a></li>
+    </ul>
+</li>
+</body>
+</html>

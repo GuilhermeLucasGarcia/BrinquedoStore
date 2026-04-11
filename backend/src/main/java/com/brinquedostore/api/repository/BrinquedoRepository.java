@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface BrinquedoRepository extends JpaRepository<Brinquedo, Long> {
-    List<Brinquedo> findByCategoriaNome(String categoria);
+    List<Brinquedo> findByNomeContainingIgnoreCaseOrderByNomeAsc(String nome);
+    List<Brinquedo> findTop8ByNomeContainingIgnoreCaseOrderByNomeAsc(String nome);
+    List<Brinquedo> findByCategoriaNomeIgnoreCase(String categoria);
+    boolean existsByCategoriaId(Long categoriaId);
 }
