@@ -59,7 +59,12 @@ public class PublicController {
 
     @GetMapping("/sobre")
     public String sobre(Model model) {
-        model.addAttribute("equipe", integranteService.listarTodos());
+        model.addAttribute("equipe", integranteService.listarFuncionarios());
         return "public/sobre";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "public/dashboard";
     }
 }

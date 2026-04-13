@@ -3,6 +3,7 @@ package com.brinquedostore.api.controller;
 import com.brinquedostore.api.config.SecurityConfig;
 import com.brinquedostore.api.dto.IntegranteAdminForm;
 import com.brinquedostore.api.model.Integrante;
+import com.brinquedostore.api.model.PerfilUsuario;
 import com.brinquedostore.api.service.CarrinhoService;
 import com.brinquedostore.api.service.IntegranteService;
 import org.junit.jupiter.api.Test;
@@ -81,6 +82,7 @@ class UsuarioAdminControllerTest {
                         .param("nome", "Ana Souza")
                         .param("nomeUsuario", "ana.souza")
                         .param("senha", "ana123")
+                        .param("perfil", "FUNCIONARIO")
                         .param("imgUrl", "https://exemplo.com/ana.jpg"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/administracao/usuarios"))
@@ -96,6 +98,7 @@ class UsuarioAdminControllerTest {
         integrante.setNomeUsuario("ana.souza");
         integrante.setImgUrl("https://exemplo.com/ana.jpg");
         integrante.setSenha("$2a$10$hash");
+        integrante.setPerfil(PerfilUsuario.FUNCIONARIO);
         return integrante;
     }
 
@@ -105,6 +108,7 @@ class UsuarioAdminControllerTest {
         form.setNome("Ana Souza");
         form.setNomeUsuario("ana.souza");
         form.setImgUrl("https://exemplo.com/ana.jpg");
+        form.setPerfil(PerfilUsuario.FUNCIONARIO);
         return form;
     }
 }

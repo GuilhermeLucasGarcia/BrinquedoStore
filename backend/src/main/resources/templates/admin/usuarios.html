@@ -96,6 +96,8 @@
                                 <th class="py-3 ps-4">ID</th>
                                 <th class="py-3">Nome</th>
                                 <th class="py-3">Usuário</th>
+                                <th class="py-3">E-mail</th>
+                                <th class="py-3">Perfil</th>
                                 <th class="py-3">Imagem</th>
                                 <th class="py-3">Senha</th>
                                 <th class="py-3">Alteração</th>
@@ -107,6 +109,12 @@
                                 <td class="ps-4" th:text="${usuario.id}">1</td>
                                 <td class="fw-bold text-dark" th:text="${usuario.nome}">Nome</td>
                                 <td th:text="${usuario.nomeUsuario}">usuario</td>
+                                <td th:text="${usuario.email != null ? usuario.email : '-'}">email@exemplo.com</td>
+                                <td>
+                                    <span class="badge rounded-pill"
+                                          th:classappend="${usuario.perfil != null and usuario.perfil.name() == 'FUNCIONARIO'} ? ' bg-primary-subtle text-primary' : ' bg-light text-secondary'"
+                                          th:text="${usuario.perfil != null ? usuario.perfil.name() : 'CLIENTE'}">CLIENTE</span>
+                                </td>
                                 <td>
                                     <a th:if="${usuario.imgUrl != null and !#strings.isEmpty(usuario.imgUrl)}"
                                        th:href="${usuario.imgUrl}" target="_blank" class="link-primary text-decoration-none">Visualizar</a>
@@ -121,7 +129,7 @@
                                 </td>
                             </tr>
                             <tr th:if="${#lists.isEmpty(usuarios)}">
-                                <td colspan="7" class="text-center py-4 text-muted">Nenhum usuário encontrado.</td>
+                                <td colspan="9" class="text-center py-4 text-muted">Nenhum usuário encontrado.</td>
                             </tr>
                             </tbody>
                         </table>

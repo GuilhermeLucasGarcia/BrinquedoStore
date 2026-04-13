@@ -93,7 +93,23 @@
                                         <div class="invalid-feedback" th:errors="*{nomeUsuario}">Usuário inválido.</div>
                                     </div>
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label fw-bold">E-mail</label>
+                                        <input type="email" class="form-control"
+                                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                               id="email" th:field="*{email}" maxlength="255" placeholder="usuario@exemplo.com">
+                                        <div class="invalid-feedback" th:errors="*{email}">E-mail inválido.</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="perfil" class="form-label fw-bold">Perfil</label>
+                                        <select class="form-select" id="perfil" th:field="*{perfil}">
+                                            <option th:value="${T(com.brinquedostore.api.model.PerfilUsuario).CLIENTE}">Cliente</option>
+                                            <option th:value="${T(com.brinquedostore.api.model.PerfilUsuario).FUNCIONARIO}">Funcionário</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <label for="imgUrl" class="form-label fw-bold">Imagem (URL)</label>
                                         <input type="url" class="form-control"
                                                th:classappend="${#fields.hasErrors('imgUrl')} ? 'is-invalid'"

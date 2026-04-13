@@ -21,8 +21,15 @@ public class Integrante {
     @Column(name = "\"NOME_USUARIO\"")
     private String nomeUsuario;
 
+    @Column(name = "\"EMAIL\"")
+    private String email;
+
     @Column(name = "\"SENHA\"")
     private String senha;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "\"PERFIL\"")
+    private PerfilUsuario perfil = PerfilUsuario.CLIENTE;
 
     @UpdateTimestamp
     @Column(name = "\"DT_ALTERACAO\"")
@@ -68,11 +75,27 @@ public class Integrante {
         this.senha = senha;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public LocalDateTime getDtAlteracao() {
         return dtAlteracao;
     }
 
     public void setDtAlteracao(LocalDateTime dtAlteracao) {
         this.dtAlteracao = dtAlteracao;
+    }
+
+    public PerfilUsuario getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilUsuario perfil) {
+        this.perfil = perfil;
     }
 }

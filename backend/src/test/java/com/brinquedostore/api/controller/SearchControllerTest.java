@@ -72,7 +72,7 @@ class SearchControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "FUNCIONARIO")
     void deveBuscarNoAdminComTermoParcial() throws Exception {
         Categoria categoria = new Categoria();
         categoria.setId(3L);
@@ -111,5 +111,12 @@ class SearchControllerTest {
     void deveExigirAutenticacaoNaBuscaAdmin() throws Exception {
         mockMvc.perform(get("/api/search/admin").param("q", "lego"))
                 .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(roles = "CLIENTE")
+    void clienteDeveReceberForbiddenNaBuscaAdmin() throws Exception {
+        mockMvc.perform(get("/api/search/admin").param("q", "lego"))
+                .andExpect(status().isForbidden());
     }
 }

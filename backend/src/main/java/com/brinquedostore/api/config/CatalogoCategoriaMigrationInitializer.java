@@ -23,7 +23,9 @@ public class CatalogoCategoriaMigrationInitializer implements CommandLineRunner 
     public void run(String... args) {
         String[] migrations = {
                 "db/migration/V1__unify_catalogo_categoria.sql",
-                "db/migration/V2__expand_integrante_usuarios.sql"
+                "db/migration/V2__expand_integrante_usuarios.sql",
+                "db/migration/V3__add_integrante_roles.sql",
+                "db/migration/V4__add_integrante_email.sql"
         };
 
         try (Connection connection = dataSource.getConnection();

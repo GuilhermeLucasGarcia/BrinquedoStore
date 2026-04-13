@@ -80,31 +80,45 @@ class NavigationMenuIntegrationTest {
     }
 
     @Test
-    void deveRenderizarItemCatalogosNoPrimeiroAcessoDaHome() throws Exception {
+    void naoDeveRenderizarMenuAdminParaVisitanteNaHome() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/catalogos")))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Catálogos")));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("href=\"/login\"")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Entrar")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("/administracao/catalogos"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Catálogos"))));
     }
 
     @Test
-    void deveRenderizarItemCatalogosNoPrimeiroAcessoAoCatalogoPublico() throws Exception {
+    void naoDeveRenderizarMenuAdminParaVisitanteNoCatalogoPublico() throws Exception {
         mockMvc.perform(get("/catalogo"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/catalogos")))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Catálogos")));
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("/administracao/catalogos"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Catálogos"))));
     }
 
     @Test
-    void deveRenderizarItemCatalogosNoPrimeiroAcessoASobre() throws Exception {
-        mockMvc.perform(get("/sobre"))
+    void naoDeveRenderizarMenuAdminParaClienteNaPaginaSobre() throws Exception {
+        mockMvc.perform(get("/sobre").with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user("cliente").roles("CLIENTE")))
                 .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("/administracao/catalogos"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Catálogos"))));
+    }
+
+    @Test
+    @WithMockUser(roles = "FUNCIONARIO")
+    void deveRenderizarMenuAdminParaFuncionarioNaHome() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("href=\"/administracao/catalogos\" class=\"btn btn-light btn-sm rounded-pill text-primary shadow-sm\"")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Painel")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("href=\"/login\" class=\"btn btn-light btn-sm rounded-pill text-primary shadow-sm\""))))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/catalogos")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Catálogos")));
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "FUNCIONARIO")
     void deveExibirTodosOsItensDoSubmenuNoPrimeiroAcessoAoAdminProdutos() throws Exception {
         mockMvc.perform(get("/administracao"))
                 .andExpect(status().isOk())
@@ -117,7 +131,7 @@ class NavigationMenuIntegrationTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "FUNCIONARIO")
     void deveExibirTodosOsItensDoSubmenuNoPrimeiroAcessoAoAdminCatalogos() throws Exception {
         when(categoriaService.listarComFiltros("", null, 0, 8))
                 .thenReturn(new org.springframework.data.domain.PageImpl<>(Collections.singletonList(categoriaMock())));
@@ -130,6 +144,17 @@ class NavigationMenuIntegrationTest {
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/catalogos")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/marcas")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("/administracao/usuarios")));
+    }
+
+    @Test
+    @WithMockUser(roles = "CLIENTE")
+    void clienteNaoDeveVerMenuAdminNaHome() throws Exception {
+        mockMvc.perform(get("/sobre"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("href=\"/login\" class=\"btn btn-light btn-sm rounded-pill text-primary shadow-sm\""))))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Sair")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("/administracao/catalogos"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Catálogos"))));
     }
 
     private Categoria categoriaMock() {

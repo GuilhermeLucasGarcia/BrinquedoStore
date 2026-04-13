@@ -4,6 +4,7 @@ import com.brinquedostore.api.model.Brinquedo;
 import com.brinquedostore.api.model.Categoria;
 import com.brinquedostore.api.model.Integrante;
 import com.brinquedostore.api.model.Marca;
+import com.brinquedostore.api.model.PerfilUsuario;
 import com.brinquedostore.api.repository.BrinquedoRepository;
 import com.brinquedostore.api.repository.CategoriaRepository;
 import com.brinquedostore.api.repository.IntegranteRepository;
@@ -132,13 +133,17 @@ public class DataInitializer implements CommandLineRunner {
             integrante1.setNome("Ana Souza");
             integrante1.setImgUrl("https://via.placeholder.com/300");
             integrante1.setNomeUsuario("ana.souza");
+            integrante1.setEmail("ana.souza@behappy.local");
             integrante1.setSenha(passwordEncoder.encode("ana123"));
+            integrante1.setPerfil(PerfilUsuario.FUNCIONARIO);
 
             Integrante integrante2 = new Integrante();
             integrante2.setNome("Bruno Lima");
             integrante2.setImgUrl("https://via.placeholder.com/300");
             integrante2.setNomeUsuario("bruno.lima");
+            integrante2.setEmail("bruno.lima@behappy.local");
             integrante2.setSenha(passwordEncoder.encode("bruno123"));
+            integrante2.setPerfil(PerfilUsuario.CLIENTE);
 
             integranteRepository.saveAll(Arrays.asList(integrante1, integrante2));
         }

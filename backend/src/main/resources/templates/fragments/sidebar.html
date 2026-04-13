@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<li th:fragment="adminMenu(activeAdminItem, expanded)">
+<li th:fragment="adminMenu(activeAdminItem, expanded)" th:if="${showAdminMenu}">
     <a href="#adminSubmenu"
        data-bs-toggle="collapse"
        th:class="${expanded} ? 'active' : 'collapsed'"
