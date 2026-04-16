@@ -36,6 +36,11 @@
                 <span>Sessão encerrada com sucesso.</span>
             </div>
 
+            <div th:if="${loginSuccess}" class="alert alert-success login-alert" role="alert">
+                <i class="fas fa-circle-check"></i>
+                <span th:text="${loginSuccess}">Operação concluída com sucesso.</span>
+            </div>
+
             <div th:if="${registerError}" class="alert alert-danger login-alert" role="alert">
                 <i class="fas fa-circle-exclamation"></i>
                 <span th:text="${registerError}">Não foi possível criar sua conta.</span>
@@ -74,6 +79,10 @@
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
+                </div>
+
+                <div class="login-helper-row">
+                    <a href="/esqueci-senha" class="login-text-link">Esqueci minha senha</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary login-submit-btn" data-loading-text="Entrando...">

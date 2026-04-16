@@ -14,6 +14,7 @@ public interface IntegranteRepository extends JpaRepository<Integrante, Long> {
     List<Integrante> findTop8ByNomeContainingIgnoreCaseOrNomeUsuarioContainingIgnoreCaseOrderByNomeAsc(String nome, String nomeUsuario);
     Optional<Integrante> findByNomeUsuarioIgnoreCase(String nomeUsuario);
     Optional<Integrante> findByEmailIgnoreCase(String email);
+    Optional<Integrante> findByResetTokenHash(String resetTokenHash);
     boolean existsByNomeUsuarioIgnoreCase(String nomeUsuario);
     boolean existsByNomeUsuarioIgnoreCaseAndIdNot(String nomeUsuario, Long id);
     boolean existsByEmailIgnoreCase(String email);

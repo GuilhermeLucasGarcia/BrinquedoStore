@@ -3,9 +3,11 @@ package com.brinquedostore.api.controller;
 import com.brinquedostore.api.config.SecurityConfig;
 import com.brinquedostore.api.dto.RegisterForm;
 import com.brinquedostore.api.model.Integrante;
+import com.brinquedostore.api.security.PasswordResetRateLimiter;
 import com.brinquedostore.api.security.RegistrationRateLimiter;
 import com.brinquedostore.api.service.CarrinhoService;
 import com.brinquedostore.api.service.IntegranteService;
+import com.brinquedostore.api.service.PasswordResetEmailService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,6 +46,12 @@ class AuthControllerTest {
 
     @MockBean
     private RegistrationRateLimiter registrationRateLimiter;
+
+    @MockBean
+    private PasswordResetRateLimiter passwordResetRateLimiter;
+
+    @MockBean
+    private PasswordResetEmailService passwordResetEmailService;
 
     @Test
     void deveRenderizarPaginaDeLoginCustomizada() throws Exception {
@@ -112,5 +120,42 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/login"))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Muitas tentativas de cadastro")));
+    }
+
+    @Test
+    void deveRenderizarPaginaEsqueciSenha() throws Exception {
+        when(carrinhoService.getQuantidadeTotal()).thenReturn(0);
+
+        mockMvc.perform(get("/esqueci-senha"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth/forgot-password"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Esqueci Minha Senha")));
+    }
+
+    @Test
+    void deveBloquearSolicitacaoDeResetPorRateLimit() throws Exception {
+        when(carrinhoService.getQuantidadeTotal()).thenReturn(0);
+        when(passwordResetRateLimiter.tryAcquire(any())).thenReturn(false);
+
+        mockMvc.perform(post("/esqueci-senha")
+                        .with(csrf())
+                        .param("email", "maria@exemplo.com"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth/forgot-password"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Muitas tentativas de recuperação")));
+    }
+
+    @Test
+    void deveRedefinirSenhaComTokenValido() throws Exception {
+        when(carrinhoService.getQuantidadeTotal()).thenReturn(0);
+        when(passwordResetRateLimiter.tryAcquire(any())).thenReturn(true);
+
+        mockMvc.perform(post("/redefinir-senha")
+                        .with(csrf())
+                        .param("token", "token-valido")
+                        .param("senha", "Senha@123")
+                        .param("confirmarSenha", "Senha@123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
     }
 }

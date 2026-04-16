@@ -82,10 +82,10 @@
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 mt-2">
                             <div class="col" th:each="membro : ${equipe}">
                                 <div class="text-center h-100">
-                                    <div class="avatar-container mb-4 position-relative mx-auto" style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
+                                    <div class="avatar-container mb-4 position-relative mx-auto">
                                         <img th:if="${membro.imgUrl != null and !#strings.isEmpty(membro.imgUrl)}"
                                              th:src="${membro.imgUrl}" alt="Foto do integrante"
-                                             class="w-100 h-100" style="object-fit: cover;">
+                                             class="avatar-image">
                                         <i th:if="${membro.imgUrl == null or #strings.isEmpty(membro.imgUrl)}" class="fas fa-user fa-5x avatar-icon"></i>
                                         <div class="photo-badge rounded-pill shadow-sm">
                                             <i class="fas fa-camera me-1"></i> Foto

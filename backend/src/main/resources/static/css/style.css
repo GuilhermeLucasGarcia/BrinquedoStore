@@ -13,6 +13,12 @@
     --logo-font: 'Chewy', system-ui; /* Nova fonte para a logo */
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--background-color);
     font-family: 'Nunito', sans-serif;
@@ -30,6 +36,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .header-left {
@@ -37,20 +45,24 @@ body {
     align-items: center;
     gap: 1rem;
     flex: 1;
+    min-width: 0;
 }
 
 .header-center {
-    flex: 2;
+    flex: 2 1 320px;
     display: flex;
     justify-content: center;
+    min-width: 0;
 }
 
 .header-right {
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 1.5rem;
+    min-width: 0;
+    flex-wrap: wrap;
 }
 
 .logo-container {
@@ -93,6 +105,12 @@ body {
 .search-bar-container {
     width: 100%;
     max-width: 500px;
+    min-width: 0;
+}
+
+.search-bar-container .input-group {
+    width: 100%;
+    min-width: 0;
 }
 
 .live-search-wrapper {
@@ -100,9 +118,12 @@ body {
 }
 
 .search-input {
+    width: 100%;
+    min-width: 0;
     background-color: rgba(255, 255, 255, 0.9) !important;
     border: 2px solid transparent !important;
     padding-left: 1.5rem !important;
+    padding-right: 3rem !important;
     transition: all 0.3s ease !important;
 }
 
@@ -207,11 +228,21 @@ body {
     background-color: white !important; /* Fundo branco conforme solicitado */
     border: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    max-width: 100%;
+    white-space: nowrap;
 }
 
 .header-right .btn-light:hover {
     background-color: #f8fafc !important;
     transform: scale(1.1);
+}
+
+.header-right .badge {
+    /* Prevent Bootstrap start-100/translate-middle from causing horizontal overflow on mobile. */
+    left: auto !important;
+    right: -6px;
+    top: -6px;
+    transform: none !important;
 }
 
 /* Global Button Styles */
@@ -493,7 +524,6 @@ body {
     background-color: white;
     padding: 2rem 0;
     margin-top: 3rem;
-}
     text-align: center;
     color: #6b7280;
     font-size: 0.9rem;
@@ -530,9 +560,27 @@ body {
 
 /* Team Section */
 .avatar-container {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
     background: white !important;
     border: 2px dashed var(--primary-light);
+    padding: 10px;
+    box-sizing: border-box;
     transition: all 0.3s ease;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .avatar-container:hover {
@@ -677,6 +725,23 @@ body {
     gap: 1rem;
 }
 
+.login-helper-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.login-text-link {
+    color: var(--primary-color);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-text-link:hover {
+    text-decoration: underline;
+}
+
 .login-form-group label {
     font-weight: 800;
     margin-bottom: 0.45rem;
@@ -815,13 +880,89 @@ body {
     text-decoration: underline;
 }
 
+.login-info-card {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    text-align: center;
+    padding: 1.4rem;
+    border-radius: 20px;
+    background: #f8fafc;
+    color: #334155;
+}
+
+.login-info-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
 @media (max-width: 991.98px) {
     .login-shell {
         padding: 1.25rem;
     }
 }
 
+@media (max-width: 767.98px) {
+    .top-header {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .header-left {
+        flex: 1 1 auto;
+    }
+
+    .header-center {
+        order: 3;
+        flex: 1 0 100%;
+        width: 100%;
+    }
+
+    .header-right {
+        flex: 0 0 auto;
+        gap: 0.75rem;
+    }
+
+    .search-bar-container {
+        max-width: none;
+    }
+
+    .logo-container {
+        height: 60px;
+        gap: 0.5rem;
+    }
+
+    .logo-text-be-happy {
+        font-size: 1.85rem;
+    }
+
+    .header-right .btn-light {
+        padding: 0.65rem 1rem !important;
+    }
+}
+
 @media (max-width: 575.98px) {
+    .top-header {
+        padding: 0.75rem;
+    }
+
+    .header-right {
+        gap: 0.5rem;
+    }
+
+    .logo-container {
+        height: 52px;
+    }
+
+    .logo-text-be-happy {
+        font-size: 1.6rem;
+    }
+
+    .header-right .btn-light {
+        padding: 0.55rem 0.85rem !important;
+        font-size: 0.9rem;
+    }
+
     .login-shell {
         padding: 0.75rem;
     }

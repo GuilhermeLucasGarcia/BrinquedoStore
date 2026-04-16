@@ -27,6 +27,21 @@ public class Integrante {
     @Column(name = "\"SENHA\"")
     private String senha;
 
+    @Column(name = "\"SENHA_ANTERIOR_1\"")
+    private String senhaAnterior1;
+
+    @Column(name = "\"SENHA_ANTERIOR_2\"")
+    private String senhaAnterior2;
+
+    @Column(name = "\"SENHA_ANTERIOR_3\"")
+    private String senhaAnterior3;
+
+    @Column(name = "\"RESET_TOKEN_HASH\"")
+    private String resetTokenHash;
+
+    @Column(name = "\"RESET_TOKEN_EXPIRA_EM\"")
+    private LocalDateTime resetTokenExpiraEm;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "\"PERFIL\"")
     private PerfilUsuario perfil = PerfilUsuario.CLIENTE;
@@ -81,6 +96,46 @@ public class Integrante {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenhaAnterior1() {
+        return senhaAnterior1;
+    }
+
+    public void setSenhaAnterior1(String senhaAnterior1) {
+        this.senhaAnterior1 = senhaAnterior1;
+    }
+
+    public String getSenhaAnterior2() {
+        return senhaAnterior2;
+    }
+
+    public void setSenhaAnterior2(String senhaAnterior2) {
+        this.senhaAnterior2 = senhaAnterior2;
+    }
+
+    public String getSenhaAnterior3() {
+        return senhaAnterior3;
+    }
+
+    public void setSenhaAnterior3(String senhaAnterior3) {
+        this.senhaAnterior3 = senhaAnterior3;
+    }
+
+    public String getResetTokenHash() {
+        return resetTokenHash;
+    }
+
+    public void setResetTokenHash(String resetTokenHash) {
+        this.resetTokenHash = resetTokenHash;
+    }
+
+    public LocalDateTime getResetTokenExpiraEm() {
+        return resetTokenExpiraEm;
+    }
+
+    public void setResetTokenExpiraEm(LocalDateTime resetTokenExpiraEm) {
+        this.resetTokenExpiraEm = resetTokenExpiraEm;
     }
 
     public LocalDateTime getDtAlteracao() {

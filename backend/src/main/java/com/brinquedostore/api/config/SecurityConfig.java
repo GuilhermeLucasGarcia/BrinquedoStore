@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/", "/login", "/register", "/error", "/catalogo/**", "/detalhes/**", "/sobre", "/carrinho/**", "/api/search/public", "/css/**", "/img/**", "/js/**").permitAll()
+                        .antMatchers("/", "/login", "/register", "/esqueci-senha", "/redefinir-senha", "/error", "/catalogo/**", "/detalhes/**", "/sobre", "/carrinho/**", "/api/search/public", "/css/**", "/img/**", "/js/**").permitAll()
                         .antMatchers("/dashboard").authenticated()
                         .antMatchers("/api/search/admin").hasAnyRole("FUNCIONARIO", "ADMIN")
                         .antMatchers("/administracao/**").hasAnyRole("FUNCIONARIO", "ADMIN")
